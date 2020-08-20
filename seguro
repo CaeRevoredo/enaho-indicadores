@@ -1,0 +1,28 @@
+clear all
+u une, clear
+
+g seguro = 1
+replace seguro=. if p4191==. & p4192==. & p4193==. & p4194==. & p4195==. & p4196==. & p4197==. & p4198==.
+replace seguro = 0 if p4191==2 & p4192==2 & p4193==2 & p4194==2 & p4195==2 & p4196==2 & p4197==2 & p4198==2
+
+*PEA Ocupada que accede a cualquier seguro de salud
+ci means seguro [aw=fac500a] if pea_o==1
+tab seguro if pea_o==1 [iw=fac500a], m
+
+*por área
+table area [iw=fac500a] if pea_o==1, c (m seguro) format(%5.0g)
+tab area [iw=fac500a] if pea_o==1 & seguro==1
+
+*departamento
+table dpto [iw=fac500a] if pea_o==1, c (m seguro) f(%5.0g) row
+
+**Por tipo de seguro
+*EsSalud
+g essa =0
+replace essa=1 if p4191==1 & p4192==2 & p4193==2 & p4194==2 & p4195==2 & p4196==2 & p4197==2 & p4198==2
+tab essa if pea_o==1 & seguro==1 [iw=fac500a], m
+g tiposeg = 1
+replace tiposeg=2 if p4191==1 & p4192==2 & p4193==2 & p4194==2 & p4195==2 & p4196==2 & p4197==2 & p4198==2
+replace tiposeg=3 if p4195==1 & p4191==2 & p4192==2 & p4193==2 & p4194==2 & p4196==2 & p4197==2 & p4198==2
+
+tab tiposeg if pea_o==1 & seguro==1 [iw=fac500a], m
