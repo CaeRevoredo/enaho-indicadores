@@ -16,6 +16,6 @@ tab p612n if p612==1 & area==1 & p612n==10 [iw=factor07]
 keep if p612n==16
 
 ***Cuadro no considera valores missing
-table area [iw=factor07] if p612n==16, c(sum p612) row format (%7.0g)
+table area [iw=factor07] if p612n==16, c(sum p612) row format (%10.0g)
 
 tab p612 [iw=factor07] if p612n==16 & area==1, m
